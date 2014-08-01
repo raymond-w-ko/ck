@@ -9,3 +9,5 @@
 /linux-ck/pkg/
 
 /nvidia-ck/*.run
+/nvidia-ck/src/
+/nvidia-ck/pkg/
