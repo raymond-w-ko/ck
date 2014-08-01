@@ -71,7 +71,15 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 'change-default-console-loglevel.patch'
 "${_bfqpath}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v7r5-3.15.patch"
 "${_bfqpath}/0002-block-introduce-the-BFQ-v7r5-I-O-sched-for-3.15.patch"
-"${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r5-for-3.15.0.patch")
+"${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r5-for-3.15.0.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fix_get_nohz_tt.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fix_idle_warn.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fixnr_cpu_ids.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-pstate_scaling.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-remove_wlist.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-sisrevert.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/test/bfs449-sis-test.patch"
+)
 sha256sums=('c3927e87be4040fa8aca1b58663dc0776aaf00485604ff88a623be2f3fb07794'
             'e25557b19dfebc91e42939aa9a62f7a4d4e36ea2cc659368cded51fb2c703456'
             '42cf2c373b9daa599d2664042bca2017db485c19ba72eba78cb4506602456a38'
@@ -83,7 +91,16 @@ sha256sums=('c3927e87be4040fa8aca1b58663dc0776aaf00485604ff88a623be2f3fb07794'
             'faced4eb4c47c4eb1a9ee8a5bf8a7c4b49d6b4d78efbe426e410730e6267d182'
             'ef40c71371168754a1f696216183ffe161aaf1d10add77964e081f3fd36b799b'
             '1a3ecd9d1e19a6b21f54ad8c7b219c6894fa7c5457a127344d0fe69b62f1c4bd'
-            '3f599d798ff5a3d449c7cf9bfec5503ab598d2d8372b051d5e1bd2419fb16ee0')
+            '3f599d798ff5a3d449c7cf9bfec5503ab598d2d8372b051d5e1bd2419fb16ee0'
+            '0cd3160ad3cc517b5f35e4d05f1883b02c6f9f1b37c377adee1856f30b77e2b8'
+            '10012456f55c223a532544740fcb39748c55f2ed494f0694d0f2e9fb9bb2234d'
+            'b2742ac069a5d3cabf741e166a77ba0838b2bceb029c375a323c8c9fd78c66cd'
+            '634f966599f6255185edf301a82ee1fd557257f583120b2623d4c9737b490be3'
+            '6b0f6083516d98b339d9737dbd1a6a3ee27d340c4d0801062cbd48541397412a'
+            'fa92125cd4f372958421729eba15adb327e4d8b0de78460a241aa2b97b9787e6'
+            '04fbca516147cd4d42a872370e4bc03c72587f6f5159ebb30d3be739ee339e7d'
+            )
+
 
 # module.symbols md5sums
 # x86_64
@@ -116,6 +133,11 @@ prepare() {
 	
 	msg "Patching source with BFQ patches"
 	for p in $(ls ${srcdir}/000{1,2,3}-block*.patch); do
+		patch -Np1 -i "$p"
+	done
+
+	msg "Apply post bfs449 patches"
+	for p in $(ls ${srcdir}/bfs449-*.patch); do
 		patch -Np1 -i "$p"
 	done
 
