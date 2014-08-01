@@ -1,0 +1,9 @@
+*.xz
+*.gz
+*.bz2
+
+linux-ck/config.x86_64.last
+linux-ck/*.patch
+
+linux-ck/src/
+linux-ck/pkg/
