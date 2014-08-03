@@ -5,6 +5,10 @@
 ### BUILD OPTIONS
 # Set these variables to ANYTHING that is not null to enable them
 
+# Enable experimental patch set including ck1+pending+smtnice
+# If unsure, see http://ck-hack.blogspot.com/2014/08/smthyperthreading-nice-and-scheduling.html
+_usesmtnice2=
+
 # Tweak kernel options prior to a build via nconfig
 _makenconfig=
 
@@ -66,47 +70,32 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 "http://ck.kolivas.org/patches/3.0/3.15/3.15-ck${_ckpatchversion}/${_ckpatchname}.bz2"
 "http://ck.kolivas.org/patches/bfs/3.0/3.15/bfs448-449.patch"
 "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
+"http://ck.kolivas.org/patches/experimental/3.15-ck1-smtnice2.patch"
 'config.x86_64' 'config'
 'linux-ck.preset'
 'change-default-console-loglevel.patch'
 "${_bfqpath}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v7r5-3.15.patch"
 "${_bfqpath}/0002-block-introduce-the-BFQ-v7r5-I-O-sched-for-3.15.patch"
-"${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r5-for-3.15.0.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fix_get_nohz_tt.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fix_idle_warn.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-fixnr_cpu_ids.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-pstate_scaling.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-remove_wlist.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/pending/bfs449-sisrevert.patch"
-"http://ck.kolivas.org/patches/bfs/3.0/3.15/test/bfs449-sis-test.patch"
-)
+"${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r5-for-3.15.0.patch")
 sha256sums=('c3927e87be4040fa8aca1b58663dc0776aaf00485604ff88a623be2f3fb07794'
             'e25557b19dfebc91e42939aa9a62f7a4d4e36ea2cc659368cded51fb2c703456'
             '42cf2c373b9daa599d2664042bca2017db485c19ba72eba78cb4506602456a38'
             'a8acb2e232408b10077b9e6392f3ef19ec2ea33f08d04c96be35778d38a9dcd2'
             'a9ca0e6fc01a3d34058b6cc9cdb560f62233f2eca5917db65dc0b29772bb236e'
-            '9cdb4da4980b80ad6df5fcf61f0f09b189a30d6563603f6177611232b7110fdc'
-            'e316c214fd1f28a45e7010258a62fe00014f9558cf7c533a637d6021647d71fa'
+            'b7c13afddf72e3684492b27d96362c63d7130404ae1d47664d041c0cc3c49b3a'
+            'f6bf5f957670846f16f4df964bc5fcfcc7bc2790b44155da591f848c0294bbb1'
+            '829203b2a95b7eeb6ba261f69ec3e2d261b0c1d1012f1e7f36c9740fb3279055'
             'c2cf8cc2600502de348f3dc3aae9a3bde5486759db15cb8a93df7aa35bd6e7da'
             'faced4eb4c47c4eb1a9ee8a5bf8a7c4b49d6b4d78efbe426e410730e6267d182'
             'ef40c71371168754a1f696216183ffe161aaf1d10add77964e081f3fd36b799b'
             '1a3ecd9d1e19a6b21f54ad8c7b219c6894fa7c5457a127344d0fe69b62f1c4bd'
-            '3f599d798ff5a3d449c7cf9bfec5503ab598d2d8372b051d5e1bd2419fb16ee0'
-            '0cd3160ad3cc517b5f35e4d05f1883b02c6f9f1b37c377adee1856f30b77e2b8'
-            '10012456f55c223a532544740fcb39748c55f2ed494f0694d0f2e9fb9bb2234d'
-            'b2742ac069a5d3cabf741e166a77ba0838b2bceb029c375a323c8c9fd78c66cd'
-            '634f966599f6255185edf301a82ee1fd557257f583120b2623d4c9737b490be3'
-            '6b0f6083516d98b339d9737dbd1a6a3ee27d340c4d0801062cbd48541397412a'
-            'fa92125cd4f372958421729eba15adb327e4d8b0de78460a241aa2b97b9787e6'
-            '04fbca516147cd4d42a872370e4bc03c72587f6f5159ebb30d3be739ee339e7d'
-            )
-
+            '3f599d798ff5a3d449c7cf9bfec5503ab598d2d8372b051d5e1bd2419fb16ee0')
 
 # module.symbols md5sums
 # x86_64
-# 7afd3bb59e730c78a7f50582f471d010 /usr/lib/modules/3.15.5-1-ck/modules.symbols
+# 7afd3bb59e730c78a7f50582f471d010 /usr/lib/modules/3.15.7-1-ck/modules.symbols
 # i686
-# 757591bf358f7db5bb0dea7bb4f09c37 /usr/lib/modules/3.15.5-1-ck/modules.symbols
+# 757591bf358f7db5bb0dea7bb4f09c37 /usr/lib/modules/3.15.7-1-ck/modules.symbols
 
 prepare() {
 	cd "${_srcname}"
@@ -120,12 +109,18 @@ prepare() {
 	# (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
 	patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
-	# patch source with ck patchset with BFS
-	# fix double name in EXTRAVERSION
-	sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
-	msg "Patching source with ck1 including BFS v0.449"
-	patch -Np1 -i "${srcdir}/${_ckpatchname}"
-	patch -Np1 -i "${srcdir}/bfs448-449.patch"
+	if [ -n "$_usesmtnice2" ]; then
+		# patch source with ck patchset with BFS
+		# fix double name in EXTRAVERSION
+		sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
+		msg "Patching source with ck1 including BFS v0.449 and experimental smtnice2 patch"
+		patch -Np1 -i "${srcdir}/${_ckpatchname}"
+	else
+		sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/3.15-ck1-smtnice2.patch"
+		msg "Patching source with ck1 including BFS v0.449"
+		patch -Np1 -i "${srcdir}/${_ckpatchname}"
+		patch -Np1 -i "${srcdir}/bfs448-449.patch"
+	fi
 
 	# Patch source to enable more gcc CPU optimizatons via the make nconfig
 	msg "Patching source with gcc patch to enable more cpus types"
@@ -133,11 +128,6 @@ prepare() {
 	
 	msg "Patching source with BFQ patches"
 	for p in $(ls ${srcdir}/000{1,2,3}-block*.patch); do
-		patch -Np1 -i "$p"
-	done
-
-	msg "Apply post bfs449 patches"
-	for p in $(ls ${srcdir}/bfs449-*.patch); do
 		patch -Np1 -i "$p"
 	done
 
