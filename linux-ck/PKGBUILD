@@ -7,7 +7,7 @@
 
 # Enable experimental patch set including ck1+pending+smtnice
 # If unsure, see http://ck-hack.blogspot.com/2014/08/smthyperthreading-nice-and-scheduling.html
-_usesmtnice2=
+_usesmtnice2=y
 
 # Tweak kernel options prior to a build via nconfig
 _makenconfig=
