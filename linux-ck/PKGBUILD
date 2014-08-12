@@ -7,7 +7,7 @@
 
 # Enable experimental patch set including ck1+pending+smtnice
 # If unsure, see http://ck-hack.blogspot.com/2014/08/smthyperthreading-nice-and-scheduling.html
-_usesmtnice4=y
+_usesmtnice5=y
 
 # Tweak kernel options prior to a build via nconfig
 _makenconfig=
@@ -55,7 +55,7 @@ pkgname=(linux-ck linux-ck-headers)
 _kernelname=-ck
 _srcname=linux-3.15
 pkgver=3.15.9
-pkgrel=3
+pkgrel=4
 arch=('i686' 'x86_64')
 url="https://wiki.archlinux.org/index.php/Linux-ck"
 license=('GPL2')
@@ -70,7 +70,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 "http://ck.kolivas.org/patches/3.0/3.15/3.15-ck${_ckpatchversion}/${_ckpatchname}.bz2"
 "http://ck.kolivas.org/patches/bfs/3.0/3.15/bfs448-449.patch"
 "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
-"http://ck.kolivas.org/patches/experimental/3.15-ck1-smtnice4.patch"
+"http://ck.kolivas.org/patches/bfs/3.0/3.15/test/3.15-ck1-smtnice5.patch"
 'config.x86_64' 'config'
 'linux-ck.preset'
 'change-default-console-loglevel.patch'
@@ -83,7 +83,7 @@ sha256sums=('c3927e87be4040fa8aca1b58663dc0776aaf00485604ff88a623be2f3fb07794'
             '42cf2c373b9daa599d2664042bca2017db485c19ba72eba78cb4506602456a38'
             'a8acb2e232408b10077b9e6392f3ef19ec2ea33f08d04c96be35778d38a9dcd2'
             'a9ca0e6fc01a3d34058b6cc9cdb560f62233f2eca5917db65dc0b29772bb236e'
-            '24651b3ad9ba0ec27e4dc06f550622a76d7533f2eefca5212ee6917441d93ae0'
+            'ea73afbe19ad77bcdba826d12981ff4710268ffcba2ccab27b0811028bcb9d38'
             'e6f7c8ade11ecbd1123dd2b07b2a10ec635ef69191fc6b9fd1277d8fc09a14ad'
             '7bea2f42b054540888e2243485d157a75c2dd76d3d553e9fccafc7a19ddc8d6a'
             'c2cf8cc2600502de348f3dc3aae9a3bde5486759db15cb8a93df7aa35bd6e7da'
@@ -110,7 +110,7 @@ prepare() {
 	# (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
 	patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
-	if [ -z "$_usesmtnice4" ]; then
+	if [ -z "$_usesmtnice5" ]; then
 		# patch source with ck patchset with BFS
 		# fix double name in EXTRAVERSION
 		sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
@@ -118,9 +118,9 @@ prepare() {
 		patch -Np1 -i "${srcdir}/${_ckpatchname}"
 		patch -Np1 -i "${srcdir}/bfs448-449.patch"
 	else
-		sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/3.15-ck1-smtnice4.patch"
-		msg "Patching-up source with ck1 including BFS v0.449 and experimental smtnice4 patch"
-		patch -Np1 -i "${srcdir}/3.15-ck1-smtnice4.patch"
+		sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/3.15-ck1-smtnice5.patch"
+		msg "Patching-up source with ck1 including BFS v0.449 and experimental smtnice5 patch"
+		patch -Np1 -i "${srcdir}/3.15-ck1-smtnice5.patch"
 	fi
 
 	# Patch source to enable more gcc CPU optimizatons via the make nconfig
