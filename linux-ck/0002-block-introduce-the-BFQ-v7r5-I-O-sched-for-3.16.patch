@@ -1,9 +1,9 @@
-From 2d7017409acf7cba1065409819581239379098be Mon Sep 17 00:00:00 2001
+From c56e6c5db41f7137d3e0b38063ef0c944eec1898 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@unimore.it>
 Date: Thu, 9 May 2013 19:10:02 +0200
-Subject: [PATCH 2/3] block: introduce the BFQ-v7r5 I/O sched for 3.15
+Subject: [PATCH 2/3] block: introduce the BFQ-v7r5 I/O sched for 3.16
 
-Add the BFQ-v7r5 I/O scheduler to 3.15.
+Add the BFQ-v7r5 I/O scheduler to 3.16.
 The general structure is borrowed from CFQ, as much of the code for
 handling I/O contexts. Over time, several useful features have been
 ported from CFQ as well (details in the changelog in README.BFQ). A
@@ -1048,7 +1048,7 @@ index 0000000..7f6b000
 +}
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
 new file mode 100644
-index 0000000..6cf7bca
+index 0000000..0a0891b
 --- /dev/null
 +++ b/block/bfq-iosched.c
 @@ -0,0 +1,3617 @@
@@ -1253,7 +1253,7 @@ index 0000000..6cf7bca
 +{
 +	if (bfqd->queued != 0) {
 +		bfq_log(bfqd, "schedule dispatch");
-+		kblockd_schedule_work(bfqd->queue, &bfqd->unplug_work);
++		kblockd_schedule_work(&bfqd->unplug_work);
 +	}
 +}
 +
@@ -5884,12 +5884,12 @@ index 0000000..c4831b7
 +}
 diff --git a/block/bfq.h b/block/bfq.h
 new file mode 100644
-index 0000000..aeca08e
+index 0000000..a83e69d
 --- /dev/null
 +++ b/block/bfq.h
 @@ -0,0 +1,742 @@
 +/*
-+ * BFQ-v7r5 for 3.15.0: data structures and common functions prototypes.
++ * BFQ-v7r5 for 3.16.0: data structures and common functions prototypes.
 + *
 + * Based on ideas and code from CFQ:
 + * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
@@ -6631,5 +6631,5 @@ index 0000000..aeca08e
 +
 +#endif /* _BFQ_H */
 -- 
-1.9.3
+2.0.3
 
