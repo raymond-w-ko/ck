@@ -1,0 +1,26 @@
+From 85b98dfc2279d478c6aea72d7fac082fab28f55a Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Tue, 19 Aug 2014 14:19:06 +0300
+Subject: [PATCH] ck-3.16: an attempt to fix BFS+ath9k issue
+
+---
+ kernel/softirq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/softirq.c b/kernel/softirq.c
+index 5918d22..ce8a6bb 100644
+--- a/kernel/softirq.c
++++ b/kernel/softirq.c
+@@ -658,7 +658,7 @@ static void run_ksoftirqd(unsigned int cpu)
+ 		__do_softirq();
+ 		rcu_note_context_switch(cpu);
+ 		local_irq_enable();
+-		cond_resched();
++		schedule();
+ 		return;
+ 	}
+ 	local_irq_enable();
+-- 
+2.0.3
+
+
