@@ -72,7 +72,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 "${_bfqpath}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v7r5-3.16.patch"
 "${_bfqpath}/0002-block-introduce-the-BFQ-v7r5-I-O-sched-for-3.16.patch"
 "${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r5-for-3.16.0.patch"
-'ath9k_resume_hang_workaround.patch')
+'http://ck.kolivas.org/patches/bfs/3.0/3.16/test/bfs450-resched-scap.patch'
+'http://ck.kolivas.org/patches/bfs/3.0/3.16/test/bfs450-sched-ipi.patch'
+'http://ck.kolivas.org/patches/bfs/3.0/3.16/test/bfs450-add-preempt-resched.patch')
 sha256sums=('4813ad7927a7d92e5339a873ab16201b242b2748934f12cb5df9ba2cfe1d77a0'
             'd2bf33289acf5c05b57aaca1fd8bb1935ac280c5c4090874e84806d35e17012e'
             'a4546dc467485c39a4109ca6e38ebddd0985491988bfeaa4ed5833f4e8328d77'
@@ -85,7 +87,9 @@ sha256sums=('4813ad7927a7d92e5339a873ab16201b242b2748934f12cb5df9ba2cfe1d77a0'
             '95cfdf13bc78e07cc540d6fc9087f0b4d710ce225acf36abbbbdeee421b023b9'
             '445b4e9ac3d9281a69523214e09323b36eda88f75ce07bc836451ead76e4adac'
             '901db70d0e8ea73167998662cfa517e0d9c48d93b95500b5a5d74dfca2ac4c66'
-            'b452095d28c38388e151a25135cdecaa0b128b8cf56a86b0d781caf153e21329')
+            'cf33ac15a3e53b8c129a25470665f0142279229f31e17499d04b0ba444431af6'
+            '7bc89f5777665b363f760ef1573f638859b8a7275259770ebb379190ba830d49'
+            '42782dad86a732abab95f93f55f6245c4379b2d16a8b71e98ac5dae477f3fed3')
 
 # module.symbols md5sums
 # x86_64
@@ -121,9 +125,10 @@ prepare() {
 		patch -Np1 -i "$p"
 	done
 
-    # patch source with a temporary workaround so that suspends and resum works
-    # with ath9k
-    patch -p1 -i "${srcdir}/ath9k_resume_hang_workaround.patch"
+    # patch from upstream to fix suspend issues with ath9k and i8k
+    patch -p1 -i "${srcdir}/bfs450-resched-scap.patch"
+    patch -p1 -i "${srcdir}/bfs450-sched-ipi.patch"
+    patch -p1 -i "${srcdir}/bfs450-add-preempt-resched.patch"
 
 	# Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
