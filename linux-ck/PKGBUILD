@@ -50,8 +50,8 @@ _BFQ_enable_=
 pkgname=(linux-ck linux-ck-headers)
 _kernelname=-ck
 _srcname=linux-3.17
-pkgver=3.17.3
-pkgrel=3
+pkgver=3.17.4
+pkgrel=1
 arch=('i686' 'x86_64')
 url="https://wiki.archlinux.org/index.php/Linux-ck"
 license=('GPL2')
@@ -73,7 +73,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 "${_bfqpath}/0002-block-introduce-the-BFQ-v7r6-I-O-sched-for-3.17.patch"
 "${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r6-for-3.17.0.patch")
 sha256sums=('f5153ec93c5fcd41b247950e6a9bcbc63fa87beafd112c133a622439a0f76251'
-            '3c1ba3cc89d0f2d5f7303f448495f64db1ab96efea5f5fdd4b4c8c547600f85d'
+            'eeef37397a15245bd143569908be40622a87dc7673965e623e811ea3f68b8434'
             '4236fa5b614d6d20a4f83affddae07c836b6ff289336c3b59602c0ff0709ac92'
             '5c3067b83d526f02be9173b92451a4b259e6245a1ee22f854cbf75b4001037d1'
             '6c74b16be3961104d58aaad84161d62c247d584428734f512a8a164373a5474c'
