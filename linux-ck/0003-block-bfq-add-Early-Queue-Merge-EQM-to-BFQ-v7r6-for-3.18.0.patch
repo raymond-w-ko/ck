@@ -1,8 +1,8 @@
-From 596fb4db1452b42d366e54a1ac7902e9fb842643 Mon Sep 17 00:00:00 2001
+From 04f637beb4b6801a81894e9918eee5899e5cc5b5 Mon Sep 17 00:00:00 2001
 From: Mauro Andreolini <mauro.andreolini@unimore.it>
 Date: Sun, 19 Oct 2014 01:15:59 +0200
 Subject: [PATCH 3/3] block, bfq: add Early Queue Merge (EQM) to BFQ-v7r6 for
- 3.17.0
+ 3.18.0
 
 A set of processes may happen  to  perform interleaved reads, i.e.,requests
 whose union would give rise to a  sequential read  pattern.  There are two
@@ -1094,7 +1094,7 @@ index c4831b7..546a254 100644
  {
  	if (bfqd->in_service_bic != NULL) {
 diff --git a/block/bfq.h b/block/bfq.h
-index d4b9470..0093084 100644
+index 01dcdc4..a193a56 100644
 --- a/block/bfq.h
 +++ b/block/bfq.h
 @@ -216,18 +216,21 @@ struct bfq_group;
@@ -1210,5 +1210,5 @@ index d4b9470..0093084 100644
  #undef BFQ_BFQQ_FNS
  
 -- 
-2.1.2
+2.1.3
 
