@@ -66,6 +66,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
 #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.sign"
 "http://ck.kolivas.org/patches/3.0/3.18/3.18-ck${_ckpatchversion}/${_ckpatchname}.bz2"
+"bfs460-locked-pluggedio.patch"
 "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
 'config.x86_64' 'config'
 'linux-ck.preset'
@@ -77,6 +78,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 sha256sums=('becc413cc9e6d7f5cc52a3ce66d65c3725bc1d1cc1001f4ce6c32b69eb188cbd'
             '4df87c395c94012544ca297db6608fe8e7c8fb5289641c4bfb4d9d87b6f06968'
             'e603c2752c160c124ae54dba8a4a9820d86912e5685b3bf6cd99705d7b147552'
+            '7ea49a31d2e0391c78588f07a8f0e0262535f5981b22d6a7fe0c1697f9dda282'
             '5c3067b83d526f02be9173b92451a4b259e6245a1ee22f854cbf75b4001037d1'
             '85d331f6cce00f9fa6ce43701aca45bfdbe935371918fdf8e5ee23b0c347afa3'
             '9ea68a3b0d4c3b8bd7fd705e466d6cfe73d8e1187ce36943e81ea3f49f766c3a'
@@ -125,6 +127,9 @@ prepare() {
 	for p in $(ls ${srcdir}/000{1,2,3}-block*.patch); do
 		patch -Np1 -i "$p"
 	done
+
+    # fix kernel oops under heavy I/O load
+    patch -Np1 -i "${srcdir}/bfs460-locked-pluggedio.patch"
 
 	# Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
