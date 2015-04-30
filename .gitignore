@@ -10,3 +10,6 @@
 /nvidia-ck/*.run
 /nvidia-ck/src/
 /nvidia-ck/pkg/
+
+/rxvt-unicode/src/
+/rxvt-unicode/pkg/

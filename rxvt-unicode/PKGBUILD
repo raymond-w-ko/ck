@@ -6,7 +6,7 @@
 
 pkgname=rxvt-unicode-patched-noinc-vteclear
 _pkgname=rxvt-unicode
-pkgver=9.20
+pkgver=9.21
 pkgrel=1
 pkgdesc='Unicode enabled rxvt-clone terminal emulator (urxvt) with fixed font spacing and clear patched to behave like VTEs (keep all lines).'
 arch=('i686' 'x86_64')
@@ -35,7 +35,7 @@ build() {
     --with-terminfo=/usr/share/terminfo \
     --enable-256-color \
     --enable-combining \
-    --enable-fading \
+    --disable-fading \
     --enable-font-styles \
     --enable-iso14755 \
     --enable-keepscrolling \
@@ -43,22 +43,22 @@ build() {
     --enable-mousewheel \
     --enable-next-scroll \
     --enable-perl \
-    --enable-pixbuf \
+    --disable-pixbuf \
     --enable-pointer-blank \
     --enable-rxvt-scroll \
     --enable-selectionscrolling \
     --enable-slipwheeling \
     --enable-smart-resize \
-    --enable-startup-notification \
-    --enable-transparency \
+    --disable-startup-notification \
+    --disable-transparency \
     --enable-unicode3 \
     --enable-utmp \
     --enable-wtmp \
-    --enable-xft \
+    --disable-xft \
     --enable-xim \
     --enable-xterm-scroll \
     --disable-frills
-  make
+  make CXXFLAGS="-march=native -Ofast -flto -w" LDFLAGS="-march=native -Ofast -flto"
 }
 
 package() {
@@ -73,7 +73,7 @@ package() {
   popd
 }
 
-md5sums=('4a5b823f08d21036f94a6c51e94d025b'
+md5sums=('a9a06c608258c5fd247c3725d8f44582'
          'df0c3a8b6bb0578d1b91e4081c47881c'
          'd4e03127a0d3bbf2e173850770651b08'
          '1c85de8253b3a9002fabaaaccbdb51de'
