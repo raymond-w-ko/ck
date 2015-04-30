@@ -1,4 +1,7 @@
 ck
 ==
 
-A collection of Arch Linux PKGBUILDs for Con Kolivas's patches
+A collection of Arch Linux PKGBUILDs
+* linux-ck
+* nvidia-ck
+* rxvt-unicode-patched
