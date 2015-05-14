@@ -13,10 +13,12 @@ _makenconfig=
 # http://ck-hack.blogspot.com/2013/09/bfs-0441-311-ck1.html?showComment=1378756529345#c5266548105449573343
 _1k_HZ_ticks=y
 
+### Do not disable NUMA until CK figures out why doing so causes panics for
+### some users!
 # NUMA is optimized for multi-socket motherboards.
 # A single multi-core CPU actually runs slower with NUMA enabled.
 # See, https://bugs.archlinux.org/task/31187
-_NUMAdisable=y
+#_NUMAdisable=
 
 # Compile ONLY probed modules
 # As of mainline 2.6.32, running with this option will only build the modules
@@ -50,7 +52,7 @@ _BFQ_enable_=
 pkgname=(linux-ck linux-ck-headers)
 _kernelname=-ck
 _srcname=linux-4.0
-pkgver=4.0
+pkgver=4.0.3
 pkgrel=1
 arch=('i686' 'x86_64')
 url="https://wiki.archlinux.org/index.php/Linux-ck"
@@ -65,24 +67,33 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
 "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
 "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
-"http://ck.kolivas.org/patches/4.0/4.0/4.0-ck${_ckpatchversion}/${_ckpatchname}.bz2"
-"http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
 'config.x86_64' 'config'
 'linux-ck.preset'
 'change-default-console-loglevel.patch'
+# ck1
+"http://ck.kolivas.org/patches/4.0/4.0/4.0-ck${_ckpatchversion}/${_ckpatchname}.bz2"
+"http://ck.kolivas.org/patches/bfs/4.0/4.0/pending/bfs462-rtmn-fix.patch"
+"http://ck.kolivas.org/patches/bfs/4.0/4.0/pending/bfs462-update_inittask.patch"
+"bfs462-nosubmit.patch"
+# gcc
+"http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
+# bfq
 "${_bfqpath}/0001-block-cgroups-kconfig-build-bits-for-BFQ-v7r7-4.0.patch"
 "${_bfqpath}/0002-block-introduce-the-BFQ-v7r7-I-O-sched-for-4.0.patch"
 "${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r7-for-4.0.0.patch")
 sha256sums=('0f2f7d44979bc8f71c4fc5d3308c03499c26a824dd311fdf6eef4dee0d7d5991'
             'SKIP'
-            '1b45b58bec7ca8dcb3e0209b835c8a50cac2d2dcc550c707517d658aa9b13f00'
+            'e8e42b67cd5ca28d3cd85b868a8caf6c0b971c948d6695ea6e399e132664de83'
             'SKIP'
-            'be3ca32d048428a0cbd476bfe467e0d46d1848b95d4d7b70ab57b522d19f6cd2'
-            '819961379909c028e321f37e27a8b1b08f1f1e3dd58680e07b541921282da532'
-            '94282c3e87921aa61a8430d2899312115185556859576ed9c169d7a841cb1ce3'
-            'cd6a97b3f6ada3d3fd23eeb1facb75395b98fb2672238d463bf97dbf4766c5ac'
+            '41b75cb7f1f3cec7046520a68c5b90cef0e88005095dab5f0bf9e10c7608ebef'
+            'a54b4451885915057d785e3f9eb09e3eb5ffad409309ab1b49b59a96cd5e6890'
             '2b3ebf5446aa3cac279842ca00bc1f2d6b7ff1766915282c201d763dbf6ca07e'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
+            'be3ca32d048428a0cbd476bfe467e0d46d1848b95d4d7b70ab57b522d19f6cd2'
+            'c28632c55b3603d538ec0669ee09fc47d1a04b40d0096c5511549946dd3aff16'
+            'a23de756d3680fb1c1cbabe3ae8c1cfb149a833177d054b9b23cc18d4d8e364a'
+            '80a635a9998ff1d580889ecb79c018d4916314612077aecf080cb50e73e58757'
+            '819961379909c028e321f37e27a8b1b08f1f1e3dd58680e07b541921282da532'
             'ff13786f79587cfc7016f0d287b82cfd79d21d00082e7fc0c954582e26c7243e'
             '940a0aa5b790f06e9b15ad9fc91b8cecc6e7f4bdbdbcc584fd1508d9d431c5ea'
             'e8b5df967de0e91bfbec7a8acd39e8967ea51e090090c5d7888b408d16cce6bb')
@@ -95,7 +106,7 @@ prepare() {
 	cd "${_srcname}"
 
 	# add upstream patch
-	# patch -p1 -i "${srcdir}/patch-${pkgver}"
+	patch -p1 -i "${srcdir}/patch-${pkgver}"
 	
 	# set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
 	# remove this when a Kconfig knob is made available by upstream
@@ -105,8 +116,18 @@ prepare() {
 	# patch source with ck patchset with BFS
 	# fix double name in EXTRAVERSION
 	sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "${srcdir}/${_ckpatchname}"
-	msg "Patching source with ck1 including BFS v0.462"
+	msg "Patching source with ck1 including BFS v0.462 and pending patches from CK"
 	patch -Np1 -i "${srcdir}/${_ckpatchname}"
+
+	# these are not experimental patches since CK has them in the 'pending'
+	# status not 'testing' which means that they'll be included in whatever
+	# the next BFS is...
+	patch -Np1 -i "${srcdir}/bfs462-rtmn-fix.patch"
+	patch -Np1 -i "${srcdir}/bfs462-update_inittask.patch"
+
+	# this is a patch to probe the cause of nordic89's panic issue
+	# https://bbs.archlinux.org/viewtopic.php?pid=1528165#p1528165
+	patch -Np1 -i "${srcdir}/bfs462-nosubmit.patch"
 
 	# Patch source to enable more gcc CPU optimizatons via the make nconfig
 	msg "Patching source with gcc patch to enable more cpus types"
@@ -135,6 +156,27 @@ prepare() {
 			-i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
 			-i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' .config
 	fi
+	
+	### Do not disable NUMA until CK figures out why doing so causes panics for
+	### some users!
+
+	# Optionally disable NUMA since >99% of users have mono-socket systems.
+	# For more, see: https://bugs.archlinux.org/task/31187
+#	if [ -n "$_NUMAdisable" ]; then
+#		if [ "${CARCH}" = "x86_64" ]; then
+#			msg "Disabling NUMA from kernel config..."
+#			sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
+#				-i -e '/CONFIG_AMD_NUMA=y/d' \
+#				-i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
+#				-i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
+#				-i -e '/# CONFIG_NUMA_EMU is not set/d' \
+#				-i -e '/CONFIG_NODES_SHIFT=6/d' \
+#				-i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
+#				-i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
+#				-i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
+#				-i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
+#		fi
+#	fi
 
 	### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
@@ -154,24 +196,6 @@ prepare() {
 	if [ "${_kernelname}" != "" ]; then
 		sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
 		sed -i "s|CONFIG_LOCALVERSION_AUTO=.*|CONFIG_LOCALVERSION_AUTO=n|" ./.config
-	fi
-
-	### Optionally disable NUMA since >99% of users have mono-socket systems.
-	# For more, see: https://bugs.archlinux.org/task/31187
-	if [ -n "$_NUMAdisable" ]; then
-		if [ "${CARCH}" = "x86_64" ]; then
-			msg "Disabling NUMA from kernel config..."
-			sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
-				-i -e '/CONFIG_AMD_NUMA=y/d' \
-				-i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
-				-i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
-				-i -e '/# CONFIG_NUMA_EMU is not set/d' \
-				-i -e '/CONFIG_NODES_SHIFT=6/d' \
-				-i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
-				-i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
-				-i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
-				-i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
-		fi
 	fi
 
 	### Optionally enable BFQ as the default I/O scheduler
@@ -194,7 +218,7 @@ prepare() {
 	### Optionally load needed modules for the make localmodconfig
 	# See https://aur.archlinux.org/packages/modprobed-db
 		if [ -n "$_localmodcfg" ]; then
-		msg "If you have modprobe_db installed, running it in recall mode now"
+		msg "If you have modprobed-db installed, running it in recall mode now"
 		if [ -e /usr/bin/modprobed-db ]; then
 			[[ ! -x /usr/bin/sudo ]] && echo "Cannot call modprobe with sudo.  Install via pacman -S sudo and configure to work with this user." && exit 1
 			sudo /usr/bin/modprobed-db recall
