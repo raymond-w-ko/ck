@@ -80,17 +80,17 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 "${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r8-for-4.1.0.patch")
 sha256sums=('caf51f085aac1e1cea4d00dbbf3093ead07b551fc07b31b2a989c05f8ea72d9f'
             'SKIP'
-            '842cb3abf053e809b23e615020f3d0730220660f0e71f259dce69510364965f1'
+            '0976127a60a950acf2796f642ac647e5231573b9a0f25703a37a50b988bf3b88'
             'SKIP'
-            'fc6fa09a28edd6755ffd5146e31dd2f513e338f281609a9f0f3a568ffa51d51b'
-            '1b553782625419841872bbad0293222de41bf6bad76ca0eacac34ccc3173eafd'
+            '187f07cd231c6a5fbb3834065968b5ac5b1a7cf779376749d550f3397500996d'
+            'afd680fd238a6f5dc006d9c212eee6a1e5377b2acc4ef56f5e57934a6eb9635c'
             '2b3ebf5446aa3cac279842ca00bc1f2d6b7ff1766915282c201d763dbf6ca07e'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
-            'be3ca32d048428a0cbd476bfe467e0d46d1848b95d4d7b70ab57b522d19f6cd2'
+            'd383e24325333b0045ddbfee4cfc2491ab25d9a6446094dbe0e5ad7ed3de133a'
             '819961379909c028e321f37e27a8b1b08f1f1e3dd58680e07b541921282da532'
-            'b0648f9fca9b155c3a7195008acd6fb8f1a644c6a8743050f3ee96e1245b88d9'
-            'f1389d30e08cc1fab638407289743d15efcde4dac63f9e3052b0df9c0880ef57'
-            'fd7f55a254217e1b57558a6288cc2aab28f7c62d7d0b8db09b598382d5bce618')
+            'ec0ca3c8051ea6d9a27a450998af8162464c224299deefc29044172940e96975'
+            'c5c2c48638c2a8180948bd118ffcc33c8b7ff5f9f1e4b04c8e2cafeca2bde87b'
+            '4f30f76adbdf49aec8d41ac27ad212734500c272f3cba594f134a7bc263820d9')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
