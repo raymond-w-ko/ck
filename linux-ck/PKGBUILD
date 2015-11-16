@@ -81,13 +81,13 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 "${_bfqpath}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-v7r8-for-4.3.0.patch")
 sha256sums=('4a622cc84b8a3c38d39bc17195b0c064d2b46945dfde0dae18f77b120bc9f3ae'
             'SKIP'
-            '229ce657a994e2cb5d329bbbf38b83f8941fa4f047151303968cc79797284bfb'
-            'a383132ff11f53bc01a2bb1ab474e641774a2caa328bd4df01da117d981bdf37'
+            'd37db40f911fc603c9ac66d1be88624c8e69927f222363d6ebd38e1582b0106b'
+            '72f1d15d7c903826181c1921a6324b6f1e8e3adc8502e3c33705eab275592afc'
             '2b3ebf5446aa3cac279842ca00bc1f2d6b7ff1766915282c201d763dbf6ca07e'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01961bedc08ae3def15050e107092cba39361f6d5402049a36ff9aa0fbf328a3'
             '3c5eccbcf6159f7e8e66f8ecc062524e89fde8ebaafda503b34be87fa6cb6588'
-            'cf0f984ebfbb8ca8ffee1a12fd791437064b9ebe0712d6f813fd5681d4840791'
+            '819961379909c028e321f37e27a8b1b08f1f1e3dd58680e07b541921282da532'
             'ebeb62206999b2749ac43bb287a6a2a5db4f6b1b688a90cefa1ceb5db94aa490'
             '91b7cb42b8337b768e5329da205a6b61211628ec99b1e308e0e9d5283b2c86eb'
             '77430c7154670dd288b6d5bd45896222bf955f02029ee5d0cfe97cc5d9bc1a9d')

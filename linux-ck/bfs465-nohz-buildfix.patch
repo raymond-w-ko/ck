@@ -1,0 +1,21 @@
+---
+ kernel/sched/bfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Index: linux-4.3-test/kernel/sched/bfs.c
+===================================================================
+--- linux-4.3-test.orig/kernel/sched/bfs.c	2015-11-12 20:27:36.947738840 +1100
++++ linux-4.3-test/kernel/sched/bfs.c	2015-11-12 20:45:12.942741377 +1100
+@@ -2680,11 +2680,11 @@ void account_idle_time(cputime_t cputime
+ {
+ }
+ 
++#ifdef CONFIG_NO_HZ_COMMON
+ void update_cpu_load_nohz(void)
+ {
+ }
+ 
+-#ifdef CONFIG_NO_HZ_COMMON
+ void calc_load_enter_idle(void)
+ {
+ }
