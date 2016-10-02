@@ -5,6 +5,10 @@
 ### BUILD OPTIONS
 # Set these variables to ANYTHING that is not null to enable them
 
+# Patch with MuQSS (Multiple Queue Skiplist Scheduler)
+# See, http://ck-hack.blogspot.com/2016/10/muqss-multiple-queue-skiplist-scheduler.html
+_MuQSS=
+
 # Tweak kernel options prior to a build via nconfig
 _makenconfig=
 
@@ -52,7 +56,7 @@ _BFQ_enable_=
 pkgname=(linux-ck linux-ck-headers)
 _kernelname=-ck
 _srcname=linux-4.7
-pkgver=4.7.5
+pkgver=4.7.6
 pkgrel=1
 arch=('i686' 'x86_64')
 url="https://wiki.archlinux.org/index.php/Linux-ck"
@@ -61,6 +65,8 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 options=('!strip')
 _ckpatchversion=5
 _ckpatchname="patch-4.7-ck${_ckpatchversion}"
+_muqssversion=103
+_muqsspatch="bfs502-MuQSS_$_muqssversion"
 _gcc_patch='enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch'
 _bfqpath='http://algo.ing.unimo.it/people/paolo/disk_sched/patches/4.7.0-v8r3'
 _bfqp1='0001-block-cgroups-kconfig-build-bits-for-BFQ-v7r11-4.7.0.patch'
@@ -71,6 +77,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
 "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
 "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
+"http://ck.kolivas.org/patches/bfs/4.0/4.7/Testing/$_muqsspatch.patch"
 'config.x86_64' 'config'
 'linux-ck.preset'
 'change-default-console-loglevel.patch'
@@ -85,8 +92,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 "$_bfqpath/$_bfqp4")
 sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
             'SKIP'
-            '46be737415406fd06c1067d1280a4a435f8b0a76d70f5d31858964b41367cc8e'
+            '2e425c268076c3b186107edf9045e0910088699e077282b5187efb5edf2b8836'
             'SKIP'
+            'e1e938f97ebca705bb2f21a819b74f47f34c43ef307bfc2c9ca18d3f293bc300'
             'db476967259be8273548b4d4cf3e177a8006e670fd1dbc488bd4dd1523e36b73'
             '612ef4c286aadb1eabd9c004fcf694f3573a487076bc983905fbab9bd918154d'
             '2b3ebf5446aa3cac279842ca00bc1f2d6b7ff1766915282c201d763dbf6ca07e'
@@ -128,6 +136,11 @@ prepare() {
 	patch -Np1 -i "$srcdir/$_bfqp2"
 	patch -Np1 -i "$srcdir/$_bfqp3"
 	patch -Np1 -i "$srcdir/$_bfqp4"
+
+	if [ -n "$_MuQSS" ]; then
+		msg "Patching with MuQSS patch"
+		patch -Np1 -i "$srcdir/$_muqsspatch.patch"
+	fi
 
 	# Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
