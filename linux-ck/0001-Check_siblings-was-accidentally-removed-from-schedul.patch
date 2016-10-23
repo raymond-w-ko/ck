@@ -1,0 +1,29 @@
+From a2aa862d7e0fb933f35337c09d2bc7951758f42d Mon Sep 17 00:00:00 2001
+From: Con Kolivas <kernel@kolivas.org>
+Date: Sun, 23 Oct 2016 06:46:41 +1100
+Subject: [PATCH] Check_siblings was accidentally removed from schedule()
+ leading to misbehaving niced/idleprio tasks on SMT.
+
+---
+ kernel/sched/MuQSS.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 8231ce0..5445d35 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -4012,8 +4012,10 @@ static void __sched notrace __schedule(bool preempt)
+ 
+ 		trace_sched_switch(preempt, prev, next);
+ 		rq = context_switch(rq, prev, next); /* unlocks the rq */
+-	} else
++	} else {
++		check_siblings(rq);
+ 		rq_unlock_irq(rq);
++	}
+ }
+ 
+ static inline void sched_submit_work(struct task_struct *tsk)
+-- 
+2.7.4
+
