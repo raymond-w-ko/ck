@@ -1,5 +1,3 @@
-# Contributor: graysky <graysky AT archlinux DOT us>
-# Contributor: Tobias Powalowski <tpowa@archlinux.org>
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 ### BUILD OPTIONS
@@ -46,7 +44,7 @@ _use_current=
 
 pkgbase=linux-ck
 _srcname=linux-4.8
-pkgver=4.8.8
+pkgver=4.8.9
 pkgrel=2
 _ckpatchversion=7
 arch=('i686' 'x86_64')
@@ -72,14 +70,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         )
 sha256sums=('3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a'
             'SKIP'
-            '588b6537cb660c2f7d483aca13f7509a5fc86c60df32c167d40e81d6c7ab4f9c'
+            '9f3c1924080a16ac2b8f054aa9d0490bc0ee4c6159e2fd10e5f6732b2e9604f6'
             'SKIP'
             '65a9a1d4ab050fa3c4d5640197d8e72dbe99a4464c97b607003729047f5b96da'
             'e1b8c54c3b81dfd526e24287436b16ec523715e6b3b96156c3e57af035ade127'
-            'e7fc2aca560aa191d1d58b4c6d51ee5b3d6085c6dcb67118668c866cb6a9b54f'
-            '00c596aef982265e6bf26dc11d90de8be6876517da7eb38f22d958ea246e4e17'
+            'b9b987ba2fbad9ebb37921f222fed3e28180dd5828fb3b8c767fb0273ac8791d'
+            'c725d04dcb1ff673ca83c20581b4c2ca99caf9fda8f86d98b1e25f2d4f347b7b'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
-            'a8cae3381e5669a70e20e36562d7433f61b13d24ad8c688cf6c398d5128e2c02'
+            'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99')
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
