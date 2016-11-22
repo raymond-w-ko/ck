@@ -4,6 +4,7 @@
 
 /linux-ck/config.x86_64.last
 /linux-ck/*.pkg
+/linux-ck/*.sign
 /linux-ck/src/
 /linux-ck/pkg/
 
