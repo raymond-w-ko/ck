@@ -3,16 +3,16 @@
 # Contrubutor: Thomas Baechler <thomas@archlinux.org>
 
 pkgname=nvidia-ck
-pkgver=375.26
-_extramodules=extramodules-4.9-ck
+pkgver=381.22
 pkgrel=3
 epoch=1
+_extramodules=extramodules-4.11-ck
 _pkgdesc="NVIDIA drivers for linux-ck."
 pkgdesc="$_pkgdesc"
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
-depends=('linux-ck>=4.9' 'linux-ck<4.10' 'libgl' "nvidia-utils=${pkgver}")
-makedepends=('linux-ck-headers>=4.9' 'linux-ck-headers<4.10' 'nvidia-libgl')
+depends=('linux-ck>=4.11' 'linux-ck<4.12' 'libgl' "nvidia-utils=${pkgver}")
+makedepends=('linux-ck-headers>=4.11' 'linux-ck-headers<4.12' 'nvidia-libgl')
 conflicts=('nvidia-340xx-ck' 'nvidia-304xx-ck')
 #groups=('ck-generic')
 #replaces=()
@@ -21,13 +21,14 @@ install=readme.install
 options=(!strip)
 source_i686=("http://us.download.nvidia.com/XFree86/Linux-x86/${pkgver}/NVIDIA-Linux-x86-${pkgver}.run")
 source_x86_64=("http://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/NVIDIA-Linux-x86_64-${pkgver}-no-compat32.run")
-sha256sums_i686=('7c79cfaae5512f34ff14cf0fe76632c7c720600d4bbae71d90ff73f1674e617b')
-sha256sums_x86_64=('9cc4abadd47165a17a4f9475e90e91d1b63de63fcc28c4e2e30e10dee845b4b2')
+sha256sums_i686=('7b7dd6ee1c871dc5367fc207bba65077c3820a683decbfe6126fc70c0d1b9d08')
+sha256sums_x86_64=('c2468130af124bfe748bdf2bc4c08952a81b35d2bdb87d1217717e6a576217e8')
 [[ "$CARCH" = "i686" ]] && _pkg="NVIDIA-Linux-x86-${pkgver}"
 [[ "$CARCH" = "x86_64" ]] && _pkg="NVIDIA-Linux-x86_64-${pkgver}-no-compat32"
 
 prepare() {
     sh "${_pkg}.run" --extract-only
+    cd "${_pkg}"
 }
 
 build() {
@@ -54,3 +55,5 @@ package() {
 
 	echo "blacklist nouveau" >> "${pkgdir}/usr/lib/modprobe.d/nvidia-ck.conf"
 }
+
+# vim:set ts=2 sw=2 et:
