@@ -1,0 +1,14 @@
+--- /home/alexey/vbox-orig/VirtualBox-5.0.0_BETA4/./src/VBox/HostServices/SharedOpenGL/render/renderspu_glx.c	2015-05-18 18:02:05.000000000 +0300
++++ ./src/VBox/HostServices/SharedOpenGL/render/renderspu_glx.c	2015-05-22 23:33:33.000000000 +0300
+@@ -1922,11 +1922,10 @@
+             XSync(window->visual->dpy, 0);
+         }
+     }
+ }
+ 
+-#define CR_RENDER_FORCE_PRESENT_MAIN_THREAD
+ 
+ void renderspu_SystemVBoxPresentComposition( WindowInfo *window, const struct VBOXVR_SCR_COMPOSITOR_ENTRY *pChangedEntry )
+ {
+     /* the CR_RENDER_FORCE_PRESENT_MAIN_THREAD is actually inherited from cocoa backend impl,
+      * here it forces rendering in WinCmd thread rather than a Main thread.
