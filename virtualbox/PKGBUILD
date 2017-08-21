@@ -69,6 +69,7 @@ source=("http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver
         '007-python2-path.patch'
         '008-no-vboxvideo.patch'
         '009-i3wm.patch'
+        '999-vbox-NVIDIA-fix-v2.patch'
         )
 sha256sums=('b5715035e681a11ef1475f83f9503d34a00f0276b89c572eebec363dda80c8a9'
             'deb03efa7ad0376aa55a087f2e882afe00935f10b0e7aa853ba9147090d341ec'
@@ -87,7 +88,8 @@ sha256sums=('b5715035e681a11ef1475f83f9503d34a00f0276b89c572eebec363dda80c8a9'
             '5d5af2de5b1f1c61ec793503350f2440661cf8fd640f11b8a86f10bce499c0dc'
             '6bdb017459532537199c399eefd3d84d8dc7f1786e79997caebd3b6eb5c75d9f'
             '8b7f241107863f82a5b0ae336aead0b3366a40103ff72dbebf33f54b512a0cbc'
-            '24d33c00da2d79ce578b5a35e816d11f9e61c5317fe4415fc08a2cbcd5f1c001')
+            '24d33c00da2d79ce578b5a35e816d11f9e61c5317fe4415fc08a2cbcd5f1c001'
+            'bb6df13e569ffd47d0442c04adbadc09ead92e3617948221cf5efa6532095072')
 
 replaces=('virtualbox' 
           'virtualbox-host-dkms' 
