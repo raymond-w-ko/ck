@@ -9,7 +9,7 @@ pkgname=('virtualbox-i3'
          'virtualbox-i3-sdk'
          'virtualbox-i3-guest-utils'
          'virtualbox-i3-ext-vnc')
-pkgver=5.1.26
+pkgver=5.1.28
 pkgrel=1
 arch=('i686' 'x86_64')
 url='http://virtualbox.org'
@@ -68,10 +68,11 @@ source=("http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver
         '006-rdesktop-vrdp-keymap-path.patch'
         '007-python2-path.patch'
         '008-no-vboxvideo.patch'
+        '009-glibc-2.26.patch'
         '009-i3wm.patch'
         '999-vbox-NVIDIA-fix-v2.patch'
         )
-sha256sums=('b5715035e681a11ef1475f83f9503d34a00f0276b89c572eebec363dda80c8a9'
+sha256sums=('ce7d4bf6535f70e3214abeb4866f7a8634aa3c7b6dedf8825e6ad80bd821398d'
             'deb03efa7ad0376aa55a087f2e882afe00935f10b0e7aa853ba9147090d341ec'
             '113f9b92141b85df01f1e74d22f01d1f1aa81650eb79b89ceefc3cae20afe2e2'
             '2101ebb58233bbfadf3aa74381f22f7e7e508559d2b46387114bc2d8e308554c'
@@ -88,6 +89,7 @@ sha256sums=('b5715035e681a11ef1475f83f9503d34a00f0276b89c572eebec363dda80c8a9'
             '5d5af2de5b1f1c61ec793503350f2440661cf8fd640f11b8a86f10bce499c0dc'
             '6bdb017459532537199c399eefd3d84d8dc7f1786e79997caebd3b6eb5c75d9f'
             '8b7f241107863f82a5b0ae336aead0b3366a40103ff72dbebf33f54b512a0cbc'
+            '3b6ad08a80f9f8c02c0c3625b7c96150056b466b8f32740b242a55736c282ec7'
             '24d33c00da2d79ce578b5a35e816d11f9e61c5317fe4415fc08a2cbcd5f1c001'
             'bb6df13e569ffd47d0442c04adbadc09ead92e3617948221cf5efa6532095072')
 
