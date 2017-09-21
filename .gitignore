@@ -31,4 +31,8 @@
 /virtualbox/pkg/
 /virtualbox/src/
 
+/virtualbox-ext-oracle/pkg/
+/virtualbox-ext-oracle/src/
+/virtualbox-ext-oracle/*.vbox-extpack
+
 /tmp
