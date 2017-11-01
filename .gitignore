@@ -2,37 +2,15 @@
 *.gz
 *.bz2
 
+/*/pkg/
+/*/src/
+
 /linux-ck/config.x86_64.last
 /linux-ck/*.pkg
 /linux-ck/*.sign
-/linux-ck/src/
-/linux-ck/pkg/
 
 /nvidia-ck/*.run
-/nvidia-ck/src/
-/nvidia-ck/pkg/
 
-/rxvt-unicode/src/
-/rxvt-unicode/pkg/
-
-/bdf-tewi-git/src/
-/bdf-tewi-git/pkg/
-/bdf-tewi-git/tewi-font/
-
-/tewisay-git/pflag/
-/tewisay-git/pkg/
-/tewisay-git/rwidth/
-/tewisay-git/src/
-/tewisay-git/tewisay/
-
-/wxlua/pkg/
-/wxlua/src/
-
-/virtualbox/pkg/
-/virtualbox/src/
-
-/virtualbox-ext-oracle/pkg/
-/virtualbox-ext-oracle/src/
 /virtualbox-ext-oracle/*.vbox-extpack
 
 /tmp
