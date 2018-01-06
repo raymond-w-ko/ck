@@ -69,8 +69,8 @@ _use_current=
 
 pkgbase=linux-ck
 _srcname=linux-4.14
-pkgver=4.14.10
-pkgrel=1
+pkgver=4.14.12
+pkgrel=3
 _ckpatchversion=1
 arch=('x86_64')
 url="https://wiki.archlinux.org/index.php/Linux-ck"
@@ -98,11 +98,11 @@ source=(
   "$_preck2/df2a75f4864b30011ab6a6f365d9378d8eafa53b.patch"
   "$_preck2/a79d648fcde72fc98048d4435bc86864a59fd01b.patch"
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-  0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
-  0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
-  0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch
-  0002-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
-  0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
+  0002-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
+  0003-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
+  0004-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
+  0005-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
+  0006-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
 )
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
@@ -110,9 +110,9 @@ validpgpkeys=(
 )
 sha256sums=('f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7'
             'SKIP'
-            '16f560aa713b46c707f04a226f67dc31fdd280aae57dd19e0413d61df5336c74'
+            'da5d8db44b0988e4c45346899d3f5a51f8bd6c25f14e729615ca9ff9f17bdefd'
             'SKIP'
-            '1ea6652833c1135203b0a8883e952f7145ac054bf82ebcd9e63e4942b5b91ce1'
+            '8020b06e547a5f6f43297b15d90b228f7aa1b5bfeec1c9d81122a389baf0c3ae'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
@@ -123,12 +123,12 @@ sha256sums=('f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7'
             'd2f59cf1c5187204eced6e53806b187e90698fcb2309955aed4020a15c659ae1'
             '3d4d2506795c4bd914959758f5b69ccf5a4f5a21f5d4bfc87bf0aa3b4b58f4c6'
             '0dbf2d23df0b5d023794332872b8b346d0c4994576b778396364e803acac4498'
-            '37b86ca3de148a34258e3176dbf41488d9dbd19e93adbd22a062b3c41332ce85'
-            'c6e7db7dfd6a07e1fd0e20c3a5f0f315f9c2a366fe42214918b756f9a1c9bfa3'
-            '1d69940c6bf1731fa1d1da29b32ec4f594fa360118fe7b128c9810285ebf13e2'
-            'ed3266ab03f836f57de0faf8a10ffd7566c909515c2649de99adaab2fac4aa32'
-            '64a014f7e1b4588728b3ea9538beee67ec63fb792d890c7be9cc13ddc2121b00'
-            '3d4c41086c077fbd515d04f5e59c0c258f700433c5da3365d960b696c2e56efb')
+            'd8a865a11665424b21fe6be9265eb287ee6d5646261a486954ddf3a4ee87e78f'
+            '9251c03da9d4b64591d77f490ff144d4ba514e66e74294ada541bf827306c9c4'
+            '6ce57b8dba43db4c6ee167a8891167b7d1e1e101d5112e776113eb37de5c37d8'
+            '1c1f5792c98369c546840950e6569a690cd88e33d4f0931d2b0b5b88f705aa4d'
+            'c3d743a0e193294bc5fbae65e7ba69fd997cd8b2ded9c9a45c5151d71d9cfb95'
+            'ec7342aab478af79a17ff65cf65bbd6744b0caee8f66c77a39bba61a78e6576d')
 
 _kernelname=${pkgbase#linux}
 
@@ -137,22 +137,25 @@ prepare() {
 
   # add upstream patch
   patch -p1 -i ../patch-${pkgver}
+  chmod +x tools/objtool/sync-check.sh  # GNU patch doesn't support git-style file mode
 
   # disable USER_NS for non-root users by default
   patch -Np1 -i ../0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 
   # https://bugs.archlinux.org/task/56575
-  patch -Np1 -i ../0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
+  patch -Np1 -i ../0002-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
 
   # https://nvd.nist.gov/vuln/detail/CVE-2017-8824
-  patch -Np1 -i ../0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
+  patch -Np1 -i ../0003-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
 
   # https://bugs.archlinux.org/task/56605
-  patch -Np1 -i ../0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch
-  patch -Np1 -i ../0002-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
+  patch -Np1 -i ../0004-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
 
   # https://bugs.archlinux.org/task/56846
-  patch -Np1 -i ../0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
+  patch -Np1 -i ../0005-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
+
+  # https://bugs.archlinux.org/task/56711
+  patch -Np1 -i ../0006-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
 
   # fix naming schema in EXTRAVERSION of ck patch set
   sed -i -re "s/^(.EXTRAVERSION).*$/\1 = /" "../${_ckpatchname}"
@@ -168,9 +171,6 @@ prepare() {
   # Patch source to unlock additional gcc CPU optimizatons
   # https://github.com/graysky2/kernel_gcc_patch
   patch -Np1 -i "../${_gcc_patch}"
-
-  # https://www.spinics.net/lists/stable/msg207374.html
-  chmod +x tools/objtool/sync-check.sh
 
   # Clean tree and copy ARCH config over
   make mrproper
