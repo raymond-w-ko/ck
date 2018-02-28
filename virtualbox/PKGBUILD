@@ -1,4 +1,4 @@
-# $Id: PKGBUILD 283498 2018-01-16 18:35:32Z eworm $
+# $Id: PKGBUILD 299890 2018-02-28 08:27:35Z eworm $
 # Maintainer: Sébastien "Seblu" Luttringer
 # Contributor: Ionut Biru <ibiru@archlinux.org>
 
@@ -10,7 +10,7 @@ pkgname=('virtualbox-i3'
          'virtualbox-i3-guest-utils'
          'virtualbox-i3-guest-utils-nox'
          'virtualbox-i3-ext-vnc')
-pkgver=5.2.6
+pkgver=5.2.8
 pkgrel=1
 arch=('x86_64')
 url='http://virtualbox.org'
@@ -72,7 +72,7 @@ source=("http://download.virtualbox.org/virtualbox/${pkgver}/VirtualBox-${pkgver
         '009-i3wm.patch'
         '999-vbox-NVIDIA-fix-v2.patch'
         )
-sha256sums=('fe705288ee50efcce10ff4c80e461a1c7091e461a7b55f98842fa1c9772ca4e7'
+sha256sums=('ee2759d47b0b4ac81b8b671c9485c87fb2db12c097b3e7e69b94c1291a8084e8'
             'deb03efa7ad0376aa55a087f2e882afe00935f10b0e7aa853ba9147090d341ec'
             '113f9b92141b85df01f1e74d22f01d1f1aa81650eb79b89ceefc3cae20afe2e2'
             '2101ebb58233bbfadf3aa74381f22f7e7e508559d2b46387114bc2d8e308554c'
