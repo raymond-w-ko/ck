@@ -37,7 +37,7 @@ _makenconfig=
 #  23. Intel Skylake X (MSKYLAKEX)
 #  24. Generic-x86-64 (GENERIC_CPU)
 #  25. Native optimizations autodetected by GCC (MNATIVE)
-_subarch=25
+_subarch=
 
 # NUMA is optimized for multi-socket motherboards. A single multi-core CPU can
 # actually run slower with NUMA enabled. Most users will want to set this option
