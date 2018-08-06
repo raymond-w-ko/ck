@@ -50,7 +50,7 @@ _subarch=27
 # It has been reported that users of CUDA require NUMA to be enabled, therefore
 # if you require CUDA support, be sure the variable below is set to a null
 # See: https://bbs.archlinux.org/viewtopic.php?id=239174
-_NUMAdisable=
+_NUMAdisable=y
 
 # Compile ONLY probed modules
 # As of mainline 2.6.32, running with this option will only build the modules
