@@ -46,7 +46,7 @@ _makenconfig=
 #  29. Intel Cascade Lake (MCASCADELAKE)
 #  30. Generic-x86-64 (GENERIC_CPU)
 #  31. Native optimizations autodetected by GCC (MNATIVE)
-_subarch=31
+_subarch=
 
 # Compile ONLY used modules to VASTLYreduce the number of modules built
 # and the build time.
